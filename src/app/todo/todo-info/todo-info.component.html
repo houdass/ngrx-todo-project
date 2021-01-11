@@ -1,0 +1,6 @@
+<h3>TODO Info</h3>
+<h5>Total des todos: {{ (todos$ | async).length }}</h5>
+<button class="btn btn-danger btn-sm" (click)="deleteAllTodos()">
+  Tout supprimer
+  <span class="fa fa-trash"></span>
+</button>
