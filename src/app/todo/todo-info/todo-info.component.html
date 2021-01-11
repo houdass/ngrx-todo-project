@@ -1,8 +1,7 @@
 <h3>TODO Info</h3>
-<ng-container *ngIf="todoState$ | async as todoState">
-  <h5>Total des todos: {{ todoState.todos.length }}</h5>
-  <h5>Dernière mise à jour: {{ todoState.lastUpdate | date:'mediumTime' }}</h5>
-</ng-container>
+<h5>Total des todos: {{ count$ | async }}</h5>
+<h5>Dernière mise à jour: {{ lastUpdate$ | async | date:'mediumTime' }}</h5>
+
 <button class="btn btn-danger btn-sm" (click)="deleteAllTodos()">
   Tout supprimer
   <span class="fa fa-trash"></span>
