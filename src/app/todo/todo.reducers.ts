@@ -5,29 +5,48 @@ import { TodoActions, TodoActionsTypes } from './todo.actions';
 
 export interface State extends EntityState<Todo> {
   lastUpdate: string;
+  loading: boolean;
+  error: string;
 }
 
 export const todoAdapter: EntityAdapter<Todo> = createEntityAdapter<Todo>();
 
-const defaultTodos: any = {
-  ids: [0, 1],
-  entities: {
-    0: new Todo('Learn Angular', 0),
-    1: new Todo('Learn Java', 1),
-  },
+const defaultTodos = {
   lastUpdate: new Date().toString(),
+  loading: false,
+  error: '',
 };
 const initialState: State = todoAdapter.getInitialState(defaultTodos);
 
 export function todoReducer(state: State = initialState, action: TodoActions): State {
   switch (action.type) {
+    case TodoActionsTypes.GET_TODOS:
+      return {
+        ...state,
+        lastUpdate: new Date().toString(),
+        loading: true,
+        error: '',
+      };
+    case TodoActionsTypes.GET_TODOS_SUCCESS:
+      return todoAdapter.setAll(action.payload, {
+        ...state,
+        lastUpdate: new Date().toString(),
+        loading: false,
+        error: '',
+      });
+    case TodoActionsTypes.GET_TODOS_ERROR:
+      return {
+        ...state,
+        lastUpdate: new Date().toString(),
+        loading: false,
+        error: action.payload,
+      };
     case TodoActionsTypes.ADD_TODO:
       return todoAdapter.addOne(action.payload, {
         ...state,
         lastUpdate: new Date().toString(),
       });
     case TodoActionsTypes.DELETE_TODO:
-      debugger
       return todoAdapter.removeOne(action.payload, {
         ...state,
         lastUpdate: new Date().toString(),

@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import {EntitySelectors, EntityState} from '@ngrx/entity/src/models';
+import { EntitySelectors, EntityState } from '@ngrx/entity/src/models';
 
 import { State, todoAdapter } from './todo.reducers';
 import { Todo } from './todo.model';
@@ -14,3 +14,4 @@ export const {
 export const selectAll = createSelector(getTodoState, selectAllTodos);
 export const selectTotal = createSelector(getTodoState, count);
 export const selectLastUpdate = createSelector(getTodoState, (state: State): string => state.lastUpdate);
+export const selectLoading = createSelector(getTodoState, (state: State): boolean => state.loading);

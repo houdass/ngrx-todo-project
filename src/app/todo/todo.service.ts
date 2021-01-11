@@ -1,34 +1,25 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
+
 import { Todo } from './todo.model';
-import { BehaviorSubject } from 'rxjs';
+import { delay } from 'rxjs/operators';
+
+const PROTOCOL = 'http';
+const PORT = 3000;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoService {
-  todos = [new Todo('Learn Java'), new Todo('Learn Angular')];
-  todosChanged$ = new BehaviorSubject(this.todos);
+  baseUrl: string;
 
-  constructor() {}
-
-  add(todo: Todo): void {
-    this.todos.push(todo);
-    this.todosChanged$.next(this.todos.slice());
+  constructor(private http: HttpClient) {
+    this.baseUrl = `${PROTOCOL}://${location.hostname}:${PORT}/`;
   }
 
-  delete(id: number): void {
-    this.todos = this.todos.filter((todo: Todo) => todo.id !== id);
-    this.todosChanged$.next(this.todos.slice());
-  }
-
-  update(todo: Todo): void {
-    const index = this.todos.findIndex((t: Todo) => t.id === todo.id);
-    this.todos[index] = todo;
-    this.todosChanged$.next(this.todos.slice());
-  }
-
-  deleteAll(): void {
-    this.todos = [];
-    this.todosChanged$.next(this.todos.slice());
+  getAll(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(`${this.baseUrl}todos`).pipe(delay(5000));
   }
 }

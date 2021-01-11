@@ -1,0 +1,16 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "name": "Learn CSS"
+    },
+    {
+      "name": "Learn NgRx",
+      "id": 2
+    },
+    {
+      "name": "Learn Angular",
+      "id": 3
+    }
+  ]
+}
