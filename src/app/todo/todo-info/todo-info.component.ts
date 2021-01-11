@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { TodoService } from '../todo.service';
-import { select, Store } from '@ngrx/store';
 import * as fromTodoReducers from '../todo.reducers';
+import * as fromTodoActions from '../todo.actions';
 
 @Component({
   selector: 'app-todo-info',
@@ -18,6 +19,6 @@ export class TodoInfoComponent {
   }
 
   deleteAllTodos(): void {
-    this.store.dispatch({ type: 'DELETE ALL TODOS' });
+    this.store.dispatch(new fromTodoActions.DeleteAllTodos());
   }
 }
